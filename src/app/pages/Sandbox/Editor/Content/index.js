@@ -33,6 +33,7 @@ import SplitPane from 'react-split-pane';
 
 import CodeEditor from 'app/components/sandbox/CodeEditor';
 import Preview from 'app/components/sandbox/Preview';
+import Tabbar from 'app/components/sandbox/Tabbar';
 
 import showAlternativeComponent from 'app/hoc/show-alternative-component';
 import fadeIn from 'app/utils/animation/fade-in';
@@ -142,7 +143,7 @@ class EditorPreview extends React.PureComponent<Props, State> {
     const mainModule = findMainModule(modules, sandbox.template);
     if (!mainModule) throw new Error('Cannot find main module');
 
-    const { currentModule: currentModuleId } = sandbox;
+    const { currentModule: currentModuleId, tabs } = sandbox;
 
     const currentModule = findCurrentModule(
       modules,
@@ -156,8 +157,19 @@ class EditorPreview extends React.PureComponent<Props, State> {
 
     const notSynced = modules.some(m => m.isNotSynced);
 
+    const openModules = tabs.map(moduleId => ({
+      ...modules.find(({ id }) => id === moduleId),
+      path: getModulePath(modules, directories, moduleId),
+      active: currentModule.id === moduleId,
+    }));
+
     const EditorPane = (
       <FullSize>
+        <Tabbar
+          modules={openModules}
+          onSelect={id => sandboxActions.setCurrentModule(sandbox.id, id)}
+          onRemove={id => sandboxActions.removeTab(sandbox.id, id)}
+        />
         <CodeEditor
           changeCode={moduleActions.setCode}
           id={currentModule.id}
