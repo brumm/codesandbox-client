@@ -31,6 +31,7 @@ export default new schema.Entity(
         currentModule,
         initialPath,
         forcedRenders: 0, // used to force renders
+        tabs: [],
       };
     },
   }
