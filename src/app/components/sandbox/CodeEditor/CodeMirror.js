@@ -11,7 +11,6 @@ import 'codemirror/addon/dialog/dialog';
 import 'codemirror/addon/hint/show-hint';
 import 'codemirror/addon/tern/tern';
 
-import Header from './Header';
 import FuzzySearch from './FuzzySearch';
 
 const documentCache = {};
@@ -525,13 +524,6 @@ export default class CodeEditor extends React.Component<Props, State> {
 
     return (
       <Container>
-        {!hideNavigation && (
-          <Header
-            saveComponent={canSave && !onlyViewMode && this.handleSaveCode}
-            prettify={!onlyViewMode && this.prettify}
-            path={modulePath}
-          />
-        )}
         <CodeContainer
           fontFamily={preferences.fontFamily}
           lineHeight={preferences.lineHeight}

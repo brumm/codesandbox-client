@@ -20,7 +20,6 @@ import LinterWorker from 'worker-loader!./monaco/workers/linter';
 import TypingsFetcherWorker from 'worker-loader!./monaco/workers/fetch-dependency-typings';
 /* eslint-enable import/no-webpack-loader-syntax */
 
-import Header from './Header';
 import MonacoEditor from './monaco/MonacoReactComponent';
 import FuzzySearch from './FuzzySearch/index';
 
@@ -898,15 +897,6 @@ export default class CodeEditor extends React.Component<Props, State> {
 
     return (
       <Container>
-        {!hideNavigation && (
-          <Header
-            saveComponent={
-              canSave && !onlyViewMode ? this.handleSaveCode : null
-            }
-            prettify={!onlyViewMode && this.prettify}
-            path={modulePath}
-          />
-        )}
         <CodeContainer hideNavigation={hideNavigation}>
           {this.state.fuzzySearchEnabled && (
             <FuzzySearch
